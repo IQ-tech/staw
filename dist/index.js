@@ -376,15 +376,30 @@ var Staw = function Staw(_ref) {
 	    _ref$hasDots = _ref.hasDots,
 	    hasDots = _ref$hasDots === undefined ? true : _ref$hasDots,
 	    _ref$hasArrows = _ref.hasArrows,
-	    hasArrows = _ref$hasArrows === undefined ? true : _ref$hasArrows;
+	    hasArrows = _ref$hasArrows === undefined ? true : _ref$hasArrows,
+	    _ref$onPrevArrowClick = _ref.onPrevArrowClick,
+	    onPrevArrowClick = _ref$onPrevArrowClick === undefined ? function () {} : _ref$onPrevArrowClick,
+	    _ref$onNextArrowClick = _ref.onNextArrowClick,
+	    onNextArrowClick = _ref$onNextArrowClick === undefined ? function () {} : _ref$onNextArrowClick,
+	    _ref$onSwipeLeftToRig = _ref.onSwipeLeftToRight,
+	    _onSwipeLeftToRight = _ref$onSwipeLeftToRig === undefined ? function () {} : _ref$onSwipeLeftToRig,
+	    _ref$onSwipeRightToLe = _ref.onSwipeRightToLeft,
+	    _onSwipeRightToLeft = _ref$onSwipeRightToLe === undefined ? function () {} : _ref$onSwipeRightToLe;
+
 	return React.createElement(
 		'div',
 		{ id: stawId, className: 'staw' },
 		React.createElement(
 			_Swipper2.default,
 			{
-				onSwipeLeftToRight: prev,
-				onSwipeRightToLeft: next,
+				onSwipeLeftToRight: function onSwipeLeftToRight() {
+					_onSwipeLeftToRight(currentSlide);
+					prev();
+				},
+				onSwipeRightToLeft: function onSwipeRightToLeft() {
+					_onSwipeRightToLeft(currentSlide);
+					next();
+				},
 				className: 'staw__container'
 			},
 			React.createElement(
@@ -402,12 +417,14 @@ var Staw = function Staw(_ref) {
 			{ className: 'staw__arrows' },
 			React.createElement('div', {
 				onClick: function onClick() {
-					return setCurrentSlide(currentSlide - 1);
+					onPrevArrowClick(currentSlide);
+					setCurrentSlide(currentSlide - 1);
 				}, className: 'staw__arrow staw__arrow--prev' + (currentSlide ? '' : ' staw__arrow--disabled')
 			}),
 			React.createElement('div', {
 				onClick: function onClick() {
-					return setCurrentSlide(currentSlide + 1);
+					onNextArrowClick(currentSlide);
+					setCurrentSlide(currentSlide + 1);
 				},
 				className: 'staw__arrow staw__arrow--next' + (currentSlide < children.length - 1 ? '' : ' staw__arrow--disabled')
 			})

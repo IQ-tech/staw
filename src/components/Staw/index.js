@@ -28,12 +28,22 @@ const Staw = ({
 	itemWidth,
 	visibleGutter = 0,
 	hasDots = true,
-	hasArrows = true
+	hasArrows = true,
+	onPrevArrowClick = () => {},
+	onNextArrowClick = () => {},
+	onSwipeLeftToRight = () => {},
+	onSwipeRightToLeft = () => {}
 }) =>
 	<div id={stawId} className="staw">
 		<Swipper
-			onSwipeLeftToRight={prev}
-			onSwipeRightToLeft={next}
+			onSwipeLeftToRight={() => {
+				onSwipeLeftToRight(currentSlide)
+				prev()
+			}}
+			onSwipeRightToLeft={() => {
+				onSwipeRightToLeft(currentSlide)
+				next()
+			}}
 			className="staw__container"
 		>
 			<div className="staw__roller" style={{
@@ -48,10 +58,16 @@ const Staw = ({
 			hasArrows &&
 			<div className="staw__arrows">
 				<div
-					onClick={() => setCurrentSlide(currentSlide - 1)} className={`staw__arrow staw__arrow--prev${currentSlide ? '' : ' staw__arrow--disabled'}`}
+					onClick={() => {
+						onPrevArrowClick(currentSlide)
+						setCurrentSlide(currentSlide - 1)
+					}} className={`staw__arrow staw__arrow--prev${currentSlide ? '' : ' staw__arrow--disabled'}`}
 				/>
 				<div
-					onClick={() => setCurrentSlide(currentSlide + 1)}
+					onClick={() => {
+						onNextArrowClick(currentSlide)
+						setCurrentSlide(currentSlide + 1)
+					}}
 					className={`staw__arrow staw__arrow--next${currentSlide < children.length - 1 ? '' : ' staw__arrow--disabled'}`}
 				/>
 			</div>
