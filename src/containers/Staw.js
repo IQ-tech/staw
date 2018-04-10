@@ -1,4 +1,4 @@
-import { compose, lifecycle, withHandlers, withState, mapProps } from 'recompose'
+import { compose, lifecycle, withHandlers, withState, withProps } from 'recompose'
 
 const getPosition = (currentSlide, itemWidth, visibleGutter = 0, children) => {
 	let position = currentSlide !== 0 ? (itemWidth * currentSlide) - (visibleGutter / 2) : 0
@@ -26,35 +26,28 @@ const stawContainer = compose(
 			if (currentSlide) {
 				setCurrentSlide(currentSlide - 1)
 			}
+		},
+		onMountAndResize: ({ stawId, children, setContainerWidth, setItemWidth, visibleGutter = 0 }) => () => {
+			const newOffsetWidth = document.getElementById(stawId).offsetWidth
+			const newContainerWidth = newOffsetWidth * children.length
+			setContainerWidth(newContainerWidth - visibleGutter)
+			setItemWidth(newOffsetWidth - (visibleGutter * 3))
 		}
 	}),
 	lifecycle({
 		componentDidMount() {
-			const { stawId, children, setContainerWidth, visibleGutter = 0, setItemWidth } = this.props
-			const { offsetWidth } = document.getElementById(stawId)
-			const containerWidth = offsetWidth * children.length
-			setContainerWidth(containerWidth - visibleGutter)
-			setItemWidth(offsetWidth - (visibleGutter * 3))
-
-			window.addEventListener('resize', () => {
-				const newOffsetWidth = document.getElementById(stawId).offsetWidth
-				const newContainerWidth = newOffsetWidth * children.length
-				setContainerWidth(newContainerWidth - visibleGutter)
-				setItemWidth(newOffsetWidth - (visibleGutter * 3))
-			})
+			const { onMountAndResize } = this.props
+			onMountAndResize()
+			window.addEventListener('resize', onMountAndResize)
+		},
+		componentWillUnmount() {
+			const { onMountAndResize } = this.props
+			window.removeEventListener('resize', onMountAndResize)
 		}
-		// TODO removeEventListener
 	}),
-	mapProps(({ currentSlide, itemWidth, visibleGutter, children, ...props }) => {
-		return {
-			position: getPosition(currentSlide, itemWidth, visibleGutter, children),
-			children,
-			visibleGutter,
-			itemWidth,
-			currentSlide,
-			...props
-		}
-	})
+	withProps(({ currentSlide, itemWidth, visibleGutter, children }) => ({
+		position: getPosition(currentSlide, itemWidth, visibleGutter, children),
+	}))
 )
 
 export default stawContainer

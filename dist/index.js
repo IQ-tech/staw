@@ -458,11 +458,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _recompose = __webpack_require__(7);
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var getPosition = function getPosition(currentSlide, itemWidth) {
 	var visibleGutter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
@@ -499,47 +495,41 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 				setCurrentSlide(currentSlide - 1);
 			}
 		};
-	}
-}), (0, _recompose.lifecycle)({
-	componentDidMount: function componentDidMount() {
-		var _props = this.props,
-		    stawId = _props.stawId,
-		    children = _props.children,
-		    setContainerWidth = _props.setContainerWidth,
-		    _props$visibleGutter = _props.visibleGutter,
-		    visibleGutter = _props$visibleGutter === undefined ? 0 : _props$visibleGutter,
-		    setItemWidth = _props.setItemWidth;
-
-		var _document$getElementB = document.getElementById(stawId),
-		    offsetWidth = _document$getElementB.offsetWidth;
-
-		var containerWidth = offsetWidth * children.length;
-		setContainerWidth(containerWidth - visibleGutter);
-		setItemWidth(offsetWidth - visibleGutter * 3);
-
-		window.addEventListener('resize', function () {
+	},
+	onMountAndResize: function onMountAndResize(_ref3) {
+		var stawId = _ref3.stawId,
+		    children = _ref3.children,
+		    setContainerWidth = _ref3.setContainerWidth,
+		    setItemWidth = _ref3.setItemWidth,
+		    _ref3$visibleGutter = _ref3.visibleGutter,
+		    visibleGutter = _ref3$visibleGutter === undefined ? 0 : _ref3$visibleGutter;
+		return function () {
 			var newOffsetWidth = document.getElementById(stawId).offsetWidth;
 			var newContainerWidth = newOffsetWidth * children.length;
 			setContainerWidth(newContainerWidth - visibleGutter);
 			setItemWidth(newOffsetWidth - visibleGutter * 3);
-		});
+		};
 	}
-	// TODO removeEventListener
+}), (0, _recompose.lifecycle)({
+	componentDidMount: function componentDidMount() {
+		var onMountAndResize = this.props.onMountAndResize;
 
-}), (0, _recompose.mapProps)(function (_ref3) {
-	var currentSlide = _ref3.currentSlide,
-	    itemWidth = _ref3.itemWidth,
-	    visibleGutter = _ref3.visibleGutter,
-	    children = _ref3.children,
-	    props = _objectWithoutProperties(_ref3, ['currentSlide', 'itemWidth', 'visibleGutter', 'children']);
+		onMountAndResize();
+		window.addEventListener('resize', onMountAndResize);
+	},
+	componentWillUnmount: function componentWillUnmount() {
+		var onMountAndResize = this.props.onMountAndResize;
 
-	return _extends({
-		position: getPosition(currentSlide, itemWidth, visibleGutter, children),
-		children: children,
-		visibleGutter: visibleGutter,
-		itemWidth: itemWidth,
-		currentSlide: currentSlide
-	}, props);
+		window.removeEventListener('resize', onMountAndResize);
+	}
+}), (0, _recompose.withProps)(function (_ref4) {
+	var currentSlide = _ref4.currentSlide,
+	    itemWidth = _ref4.itemWidth,
+	    visibleGutter = _ref4.visibleGutter,
+	    children = _ref4.children;
+	return {
+		position: getPosition(currentSlide, itemWidth, visibleGutter, children)
+	};
 }));
 
 exports.default = stawContainer;
