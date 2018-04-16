@@ -340,7 +340,11 @@ var _Swipper = __webpack_require__(15);
 
 var _Swipper2 = _interopRequireDefault(_Swipper);
 
-__webpack_require__(22);
+var _Controls = __webpack_require__(22);
+
+var _Controls2 = _interopRequireDefault(_Controls);
+
+__webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -388,60 +392,42 @@ var Staw = function Staw(_ref) {
 
 	return React.createElement(
 		'div',
-		{ id: stawId, className: 'staw' },
+		{ className: 'staw' },
 		React.createElement(
-			_Swipper2.default,
-			{
-				onSwipeLeftToRight: function onSwipeLeftToRight() {
-					_onSwipeLeftToRight(currentSlide);
-					prev();
-				},
-				onSwipeRightToLeft: function onSwipeRightToLeft() {
-					_onSwipeRightToLeft(currentSlide);
-					next();
-				},
-				className: 'staw__container'
-			},
+			'div',
+			{ id: stawId, className: 'staw__holder' },
 			React.createElement(
-				'div',
-				{ className: 'staw__roller', style: {
-						width: containerWidth || 'inherit',
-						transform: 'translateX(-' + position + 'px)',
-						padding: '0 ' + visibleGutter / 2 + 'px'
-					} },
-				getRollSlides(children, visibleGutter, itemWidth)
+				_Swipper2.default,
+				{
+					onSwipeLeftToRight: function onSwipeLeftToRight() {
+						_onSwipeLeftToRight(currentSlide);
+						prev();
+					},
+					onSwipeRightToLeft: function onSwipeRightToLeft() {
+						_onSwipeRightToLeft(currentSlide);
+						next();
+					},
+					className: 'staw__container'
+				},
+				React.createElement(
+					'div',
+					{ className: 'staw__roller', style: {
+							width: containerWidth || 'inherit',
+							transform: 'translateX(-' + position + 'px)',
+							padding: '0 ' + visibleGutter / 2 + 'px'
+						} },
+					getRollSlides(children, visibleGutter, itemWidth)
+				)
 			)
 		),
-		hasArrows && React.createElement(
-			'div',
-			{ className: 'staw__arrows' },
-			React.createElement('div', {
-				onClick: function onClick() {
-					onPrevArrowClick(currentSlide);
-					setCurrentSlide(currentSlide - 1);
-				}, className: 'staw__arrow staw__arrow--prev' + (currentSlide ? '' : ' staw__arrow--disabled')
-			}),
-			React.createElement('div', {
-				onClick: function onClick() {
-					onNextArrowClick(currentSlide);
-					setCurrentSlide(currentSlide + 1);
-				},
-				className: 'staw__arrow staw__arrow--next' + (currentSlide < children.length - 1 ? '' : ' staw__arrow--disabled')
-			})
-		),
-		hasDots && React.createElement(
-			'div',
-			{ className: 'staw__dots' },
-			children.map(function (value, key) {
-				return React.createElement('div', {
-					key: key,
-					onClick: function onClick() {
-						return setCurrentSlide(key);
-					},
-					className: 'staw__dot' + (currentSlide === key ? ' staw__dot--active' : '')
-				});
-			})
-		)
+		React.createElement(_Controls2.default, {
+			hasArrows: hasArrows,
+			hasDots: hasDots,
+			currentSlide: currentSlide,
+			onNextArrowClick: onNextArrowClick,
+			onPrevArrowClick: onPrevArrowClick,
+			setCurrentSlide: setCurrentSlide,
+			children: children })
 	);
 };
 
@@ -2276,6 +2262,61 @@ function compose() {
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (_ref) {
+  var hasArrows = _ref.hasArrows,
+      hasDots = _ref.hasDots,
+      currentSlide = _ref.currentSlide,
+      children = _ref.children,
+      onNextArrowClick = _ref.onNextArrowClick,
+      onPrevArrowClick = _ref.onPrevArrowClick,
+      setCurrentSlide = _ref.setCurrentSlide;
+  return React.createElement(
+    "div",
+    { className: "staw__controls" },
+    hasArrows && React.createElement(
+      "div",
+      { className: "staw__arrows" },
+      React.createElement("div", {
+        onClick: function onClick() {
+          onPrevArrowClick(currentSlide);
+          setCurrentSlide(currentSlide - 1);
+        }, className: "staw__arrow staw__arrow--prev" + (currentSlide ? '' : ' staw__arrow--disabled')
+      }),
+      React.createElement("div", {
+        onClick: function onClick() {
+          onNextArrowClick(currentSlide);
+          setCurrentSlide(currentSlide + 1);
+        },
+        className: "staw__arrow staw__arrow--next" + (currentSlide < children.length - 1 ? '' : ' staw__arrow--disabled')
+      })
+    ),
+    hasDots && React.createElement(
+      "div",
+      { className: "staw__dots" },
+      children.map(function (value, key) {
+        return React.createElement("div", {
+          key: key,
+          onClick: function onClick() {
+            return setCurrentSlide(key);
+          },
+          className: "staw__dot" + (currentSlide === key ? ' staw__dot--active' : '')
+        });
+      })
+    )
+  );
+};
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
