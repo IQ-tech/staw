@@ -1,7 +1,6 @@
 # Staw
 
-One Carousel to rule them all, One Carousel to find them,
-One Carousel to bring them all and in the light bind them
+One Carousel to rule them all. Simple like recompose, weightless like a leaf and very easy to Staw (badum tsss)
 
 ### Installing
 
@@ -24,26 +23,56 @@ Input all slides section as children
 
 ```
 <Staw>
-	children1
-	children2
-	children3
+	child1
+	child2
+	child3
 </Staw>
 
 ```
 
-Configuration Props
+Each child will be a slide
 
-Prop Name | Prop Description
---------- | ----------------
-visibleGutter| amount of next slide that should appear in px, if the slide isn't the first one or the last one, this amount is halfed in the next and previous slide. Default 0 px.
-hasDots| boolean that define if have or not dots for navigation. Default true.
-hasArrows| boolean that define if have or not arrow for navigation. Default true.
+### Props
+
+Name | Description | Default Value
+--------- | -------- | ----------------
+visibleGutter| amount of next slide that should appear in px, if the slide isn't the first one or the last one, this amount is halfed in the next and previous slide. | 0 
+hasDots| boolean that define if have or not dots for navigation. | true
+hasArrows | boolean that define if have or not arrow for navigation. | true
+onPrevArrowClick(currentSlide) | a callback that executes on prev arrow click, before currentSlide update | (currentSlide) => {}
+onNextArrowClick(currentSlide) | a callback that executes on next arrow click, before currentSlide update | (currentSlide) => {}
+onSwipeLeftToRight(currentSlide) | same as prevArrowClick but for swipe | (currentSlide) => {}
+onSwipeRightToLeft(currentSlide) | same as nextArrowClick but for swipe | (currentSlide) => {}
+
+### Example
+```
+<Staw
+    visibleGutter={30}
+    hasDots={false}
+    onPrevArrowClick={(currentSlide) => {
+        console.log(currentSlide)
+    }}
+>
+    <div className="firstSlide">
+        <div className="anyClass">content of my first slide</div>
+    </div>
+    <div className="secondSlide">
+        <div className="anyClass">content of my second slide</div>
+    </div>
+    <div className"thirdSlide">
+        <div className="anyClass">a lot of items</div>
+        <div className="anyClass">in the same</div>
+        <div className="anyClass">slide depends only of yours css</div>
+    </div>
+</Staw>
+```
+
 
 ### Dependencies
 
-* React
-* ReactDOM
-* Recompose
+* React ^16.0.0
+* ReactDOM ^16.0.0
+* Recompose ^0.26.0
 
 ### License
 
