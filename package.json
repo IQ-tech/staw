@@ -1,8 +1,20 @@
 {
   "name": "staw",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "license": "MIT",
+  "author": "iq360",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IQ-tech/staw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IQ-tech/staw/issues"
+  },
+  "scripts": {
+    "build": "npx webpack"
+  },
+  "homepage": "https://github.com/IQ-tech/staw#readme",
   "pearDependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
