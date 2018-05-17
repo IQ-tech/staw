@@ -15,7 +15,7 @@
     "build": "npx webpack"
   },
   "homepage": "https://github.com/IQ-tech/staw#readme",
-  "pearDependencies": {
+  "peerDependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "recompose": "^0.26.0"
