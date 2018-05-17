@@ -12,7 +12,8 @@
     "url": "https://github.com/IQ-tech/staw/issues"
   },
   "scripts": {
-    "build": "npx webpack"
+    "build": "npx webpack",
+    "watch": "npx webpack --watch"
   },
   "homepage": "https://github.com/IQ-tech/staw#readme",
   "pearDependencies": {

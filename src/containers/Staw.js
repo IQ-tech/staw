@@ -45,9 +45,9 @@ const stawContainer = compose(
 			window.addEventListener('resize', onMountAndResize)
 		},
 		componentDidUpdate(prevProps) {
-			const { currentSlide, setCurrentSlide, children, autoSlide, setSlideInterval } = this.props
+			const { currentSlide, setCurrentSlide, children, autoSlide, setSlideTimeout } = this.props
 			if (currentSlide === children.length - 1 && prevProps.currentSlide !== this.props.currentSlide) {
-				setSlideInterval(setTimeout(() => setCurrentSlide(0), autoSlide))
+				setSlideTimeout(setTimeout(() => setCurrentSlide(0), autoSlide))
 			}
 
 		},
