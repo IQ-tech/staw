@@ -459,7 +459,7 @@ var getPosition = function getPosition(currentSlide, itemWidth) {
 	return position;
 };
 
-var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSlide', 'setCurrentSlide', 0), (0, _recompose.withState)('containerWidth', 'setContainerWidth', 0), (0, _recompose.withState)('itemWidth', 'setItemWidth', 0), (0, _recompose.withState)('stawId', 'setStawId', function () {
+var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSlide', 'setCurrentSlide', 0), (0, _recompose.withState)('containerWidth', 'setContainerWidth', 0), (0, _recompose.withState)('itemWidth', 'setItemWidth', 0), (0, _recompose.withState)('slideInterval', 'setSlideInterval', 0), (0, _recompose.withState)('slideTimeout', 'setSlideTimeout', 0), (0, _recompose.withState)('stawId', 'setStawId', function () {
 	return 'staw-' + Date.now();
 }), (0, _recompose.withHandlers)({
 	next: function next(_ref) {
@@ -499,15 +499,41 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	}
 }), (0, _recompose.lifecycle)({
 	componentDidMount: function componentDidMount() {
-		var onMountAndResize = this.props.onMountAndResize;
+		var _props = this.props,
+		    onMountAndResize = _props.onMountAndResize,
+		    next = _props.next,
+		    autoSlide = _props.autoSlide,
+		    setSlideInterval = _props.setSlideInterval;
 
 		onMountAndResize();
+		if (autoSlide) setSlideInterval(setInterval(function () {
+			return next();
+		}, autoSlide));
 		window.addEventListener('resize', onMountAndResize);
 	},
+	componentDidUpdate: function componentDidUpdate(prevProps) {
+		var _props2 = this.props,
+		    currentSlide = _props2.currentSlide,
+		    setCurrentSlide = _props2.setCurrentSlide,
+		    children = _props2.children,
+		    autoSlide = _props2.autoSlide,
+		    setSlideInterval = _props2.setSlideInterval;
+
+		if (currentSlide === children.length - 1 && prevProps.currentSlide !== this.props.currentSlide) {
+			setSlideInterval(setTimeout(function () {
+				return setCurrentSlide(0);
+			}, autoSlide));
+		}
+	},
 	componentWillUnmount: function componentWillUnmount() {
-		var onMountAndResize = this.props.onMountAndResize;
+		var _props3 = this.props,
+		    onMountAndResize = _props3.onMountAndResize,
+		    slideInterval = _props3.slideInterval,
+		    slideTimeout = _props3.slideTimeout;
 
 		window.removeEventListener('resize', onMountAndResize);
+		clearTimeout(slideTimeout);
+		clearInterval(slideInterval);
 	}
 }), (0, _recompose.withProps)(function (_ref4) {
 	var currentSlide = _ref4.currentSlide,

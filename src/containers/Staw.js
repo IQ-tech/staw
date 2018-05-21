@@ -14,6 +14,8 @@ const stawContainer = compose(
 	withState('currentSlide', 'setCurrentSlide', 0),
 	withState('containerWidth', 'setContainerWidth', 0),
 	withState('itemWidth', 'setItemWidth', 0),
+	withState('slideInterval', 'setSlideInterval', 0),
+	withState('slideTimeout', 'setSlideTimeout', 0),
 	withState('stawId', 'setStawId', () => `staw-${Date.now()}`),
 	withHandlers({
 		next: ({ children, currentSlide, setCurrentSlide, transitionDuration }) => () => {
@@ -36,13 +38,24 @@ const stawContainer = compose(
 	}),
 	lifecycle({
 		componentDidMount() {
-			const { onMountAndResize } = this.props
+			const { onMountAndResize, next, autoSlide, setSlideInterval } = this.props
 			onMountAndResize()
+			if (autoSlide)
+				setSlideInterval(setInterval(() => next(), autoSlide))
 			window.addEventListener('resize', onMountAndResize)
 		},
+		componentDidUpdate(prevProps) {
+			const { currentSlide, setCurrentSlide, children, autoSlide, setSlideTimeout } = this.props
+			if (currentSlide === children.length - 1 && prevProps.currentSlide !== this.props.currentSlide) {
+				setSlideTimeout(setTimeout(() => setCurrentSlide(0), autoSlide))
+			}
+
+		},
 		componentWillUnmount() {
-			const { onMountAndResize } = this.props
+			const { onMountAndResize, slideInterval, slideTimeout } = this.props
 			window.removeEventListener('resize', onMountAndResize)
+			clearTimeout(slideTimeout)
+			clearInterval(slideInterval)
 		}
 	}),
 	withProps(({ currentSlide, itemWidth, visibleGutter, children }) => ({
