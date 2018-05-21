@@ -68,6 +68,12 @@ module.exports =
 /* 0 */
 /***/ (function(module, exports) {
 
+module.exports = require("react");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -255,12 +261,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -326,7 +326,7 @@ exports.default = _Staw2.default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(React) {
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -432,6 +432,7 @@ var Staw = function Staw(_ref) {
 };
 
 exports.default = (0, _Staw2.default)(Staw);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 6 */
@@ -566,7 +567,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createEventHandler", function() { return createEventHandler; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createEventHandlerWithConfig", function() { return createEventHandlerWithConfig; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setObservableConfig", function() { return configureObservable; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fbjs_lib_shallowEqual__);
@@ -1598,7 +1599,7 @@ var createEventHandler = createEventHandlerWithConfig(config);
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 8 */
@@ -1921,7 +1922,7 @@ function symbolObservablePonyfill(root) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(React) {
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -1990,6 +1991,7 @@ var Swipper = function Swipper(_ref3) {
 };
 
 exports.default = enhance(Swipper);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 16 */
@@ -2002,7 +2004,7 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _setDisplayName = __webpack_require__(2);
 
@@ -2065,7 +2067,7 @@ var withState = function withState(stateName, stateUpdaterName, initialState) {
 };
 
 exports.default = withState;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 17 */
@@ -2119,7 +2121,7 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _setDisplayName = __webpack_require__(2);
 
@@ -2205,7 +2207,7 @@ var withHandlers = function withHandlers(handlers) {
 };
 
 exports.default = withHandlers;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 20 */
@@ -2265,7 +2267,7 @@ function compose() {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(React) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -2314,6 +2316,7 @@ exports.default = function (_ref) {
     )
   );
 };
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 23 */

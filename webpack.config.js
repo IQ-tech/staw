@@ -69,6 +69,9 @@ module.exports = {
 			filename: 'Staw.css',
 			allChunks: true
 		}),
+		new webpack.ProvidePlugin({
+			React: 'react'
+		})
 	],
 	externals: {
 		'react': 'commonjs react'
