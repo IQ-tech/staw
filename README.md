@@ -21,7 +21,7 @@ Import the component from Node Modules
 
 Input all slides section as children
 
-```
+```html
 <Staw>
 	child1
 	child2
@@ -45,7 +45,7 @@ onSwipeLeftToRight(currentSlide) | same as prevArrowClick but for swipe | (curre
 onSwipeRightToLeft(currentSlide) | same as nextArrowClick but for swipe | (currentSlide) => {}
 
 ### Example
-```
+```jsx
 <Staw
     visibleGutter={30}
     hasDots={false}
