@@ -3,18 +3,24 @@ import Swipper from '../Swipper'
 import StawControls from './Controls'
 import './Staw.styl'
 
-const getRollSlides = (children, visibleGutter, itemWidth) =>
-	children.map((child, key) =>
-		<div
-			className="staw__slide"
-			key={key}
-			style={{
-				width: itemWidth || 'inherit',
-				marginLeft: key !== 0 ? `${visibleGutter / 2}px` : 0
-			}}
-		>
-			{child}
-		</div>
+const getRollSlides = (children, visibleGutter, itemWidth, currentSlide) =>
+	children.map((child, key) => {
+
+      let className = 'staw__slide'
+      className += (currentSlide == key) ? ' staw__slide--active' : ''
+
+      return <div
+              className={className}
+              key={key}
+              style={{
+                width: itemWidth || 'inherit',
+                marginLeft: key !== 0 ? `${visibleGutter / 2}px` : 0
+              }}
+            >
+              {child}
+            </div>
+      
+    }
 	)
 
 const Staw = ({
@@ -53,7 +59,7 @@ const Staw = ({
 						transform: `translateX(-${position}px)`,
 						padding: `0 ${visibleGutter / 2}px`
 					}}>
-					{getRollSlides(children, visibleGutter, itemWidth)}
+					{getRollSlides(children, visibleGutter, itemWidth, currentSlide)}
 				</div>
 			</Swipper>
 		</div>
