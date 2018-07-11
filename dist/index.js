@@ -503,8 +503,12 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	}
 }), (0, _recompose.lifecycle)({
 	componentDidMount: function componentDidMount() {
-		var onMountAndResize = this.props.onMountAndResize;
+		var _props = this.props,
+		    onMountAndResize = _props.onMountAndResize,
+		    startAt = _props.startAt,
+		    setCurrentSlide = _props.setCurrentSlide;
 
+		startAt && setCurrentSlide(startAt);
 		onMountAndResize();
 		window.addEventListener('resize', onMountAndResize);
 	},

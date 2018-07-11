@@ -36,7 +36,8 @@ const stawContainer = compose(
 	}),
 	lifecycle({
 		componentDidMount() {
-			const { onMountAndResize } = this.props
+			const { onMountAndResize, startAt, setCurrentSlide } = this.props
+			startAt && setCurrentSlide(startAt)
 			onMountAndResize()
 			window.addEventListener('resize', onMountAndResize)
 		},
