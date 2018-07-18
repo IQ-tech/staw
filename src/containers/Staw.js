@@ -46,10 +46,17 @@ const stawContainer = compose(
 			window.removeEventListener('resize', onMountAndResize)
 		}
 	}),
-	withProps(({ currentSlide, itemWidth, visibleGutter, children, customNavigation }) => ({
-		position: getPosition(currentSlide, itemWidth, visibleGutter, children),
-		renderCustomNavigation: customNavigation && customNavigation.length === children.length 
-	}))
+	withProps(({ currentSlide, itemWidth, visibleGutter, children, customNavigation }) => {
+		const hasCustomNavigation = !!(customNavigation && Array.isArray(customNavigation) && customNavigation.length)
+		const validCustomNavigation =  hasCustomNavigation && customNavigation.length === children.length
+		const renderCustomNavigation = hasCustomNavigation && validCustomNavigation
+		return {
+			position: getPosition(currentSlide, itemWidth, visibleGutter, children),
+			hasCustomNavigation,
+			validCustomNavigation,
+			renderCustomNavigation
+		}
+	})
 )
 
 export default stawContainer

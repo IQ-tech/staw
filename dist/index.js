@@ -387,6 +387,8 @@ var Staw = function Staw(_ref) {
 	    hasArrows = _ref$hasArrows === undefined ? true : _ref$hasArrows,
 	    _ref$customNavigation = _ref.customNavigation,
 	    customNavigation = _ref$customNavigation === undefined ? false : _ref$customNavigation,
+	    hasCustomNavigation = _ref.hasCustomNavigation,
+	    validCustomNavigation = _ref.validCustomNavigation,
 	    renderCustomNavigation = _ref.renderCustomNavigation,
 	    _ref$onPrevArrowClick = _ref.onPrevArrowClick,
 	    onPrevArrowClick = _ref$onPrevArrowClick === undefined ? function () {} : _ref$onPrevArrowClick,
@@ -436,6 +438,8 @@ var Staw = function Staw(_ref) {
 			onPrevArrowClick: onPrevArrowClick,
 			setCurrentSlide: setCurrentSlide,
 			renderCustomNavigation: renderCustomNavigation,
+			hasCustomNavigation: hasCustomNavigation,
+			validCustomNavigation: validCustomNavigation,
 			children: children })
 	);
 };
@@ -529,9 +533,15 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	    visibleGutter = _ref4.visibleGutter,
 	    children = _ref4.children,
 	    customNavigation = _ref4.customNavigation;
+
+	var hasCustomNavigation = !!(customNavigation && Array.isArray(customNavigation) && customNavigation.length);
+	var validCustomNavigation = hasCustomNavigation && customNavigation.length === children.length;
+	var renderCustomNavigation = hasCustomNavigation && validCustomNavigation;
 	return {
 		position: getPosition(currentSlide, itemWidth, visibleGutter, children),
-		renderCustomNavigation: customNavigation && customNavigation.length === children.length
+		hasCustomNavigation: hasCustomNavigation,
+		validCustomNavigation: validCustomNavigation,
+		renderCustomNavigation: renderCustomNavigation
 	};
 }));
 
@@ -2295,6 +2305,8 @@ exports.default = function (_ref) {
       onNextArrowClick = _ref.onNextArrowClick,
       onPrevArrowClick = _ref.onPrevArrowClick,
       setCurrentSlide = _ref.setCurrentSlide,
+      hasCustomNavigation = _ref.hasCustomNavigation,
+      validCustomNavigation = _ref.validCustomNavigation,
       renderCustomNavigation = _ref.renderCustomNavigation;
   return React.createElement(
     "div",
@@ -2329,7 +2341,7 @@ exports.default = function (_ref) {
         });
       })
     ),
-    !renderCustomNavigation ? !!console.error("The number of items into Staw isn't the same number of custom dots") : React.createElement(
+    renderCustomNavigation ? React.createElement(
       "div",
       { className: "staw__custom-dots" },
       children.map(function (value, key) {
@@ -2345,7 +2357,7 @@ exports.default = function (_ref) {
           customNavigation[key]
         );
       })
-    )
+    ) : hasCustomNavigation && console.error("The number of items into Staw isn't the same number of custom dots")
   );
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))

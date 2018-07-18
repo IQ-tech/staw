@@ -19,7 +19,7 @@ const getRollSlides = (children, visibleGutter, itemWidth, currentSlide) =>
             >
               {child}
             </div>
-      
+
     }
 	)
 
@@ -37,6 +37,8 @@ const Staw = ({
 	hasDots = true,
 	hasArrows = true,
 	customNavigation = false,
+	hasCustomNavigation,
+	validCustomNavigation,
 	renderCustomNavigation,
 	onPrevArrowClick = () => {},
 	onNextArrowClick = () => {},
@@ -74,6 +76,8 @@ const Staw = ({
 			onPrevArrowClick={onPrevArrowClick}
 			setCurrentSlide={setCurrentSlide}
 			renderCustomNavigation={renderCustomNavigation}
+			hasCustomNavigation={hasCustomNavigation}
+			validCustomNavigation={validCustomNavigation}
 			children={children} />
 	</div>
 

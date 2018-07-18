@@ -7,6 +7,8 @@ export default ({
   onNextArrowClick,
   onPrevArrowClick,
   setCurrentSlide,
+  hasCustomNavigation,
+  validCustomNavigation,
   renderCustomNavigation
 }) =>
   <div className="staw__controls">
@@ -43,9 +45,8 @@ export default ({
       </div>
     }
     {
-      !renderCustomNavigation  
-      ? !!console.error("The number of items into Staw isn't the same number of custom dots")
-      :  <div className="staw__custom-dots">
+      renderCustomNavigation
+      ?  <div className="staw__custom-dots">
           {
             children.map((value, key) =>
               <div
@@ -58,5 +59,6 @@ export default ({
             )
           }
         </div>
+      : hasCustomNavigation && console.error("The number of items into Staw isn't the same number of custom dots")
     }
 </div>
