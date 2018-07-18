@@ -385,6 +385,9 @@ var Staw = function Staw(_ref) {
 	    hasDots = _ref$hasDots === undefined ? true : _ref$hasDots,
 	    _ref$hasArrows = _ref.hasArrows,
 	    hasArrows = _ref$hasArrows === undefined ? true : _ref$hasArrows,
+	    _ref$customNavigation = _ref.customNavigation,
+	    customNavigation = _ref$customNavigation === undefined ? false : _ref$customNavigation,
+	    renderCustomNavigation = _ref.renderCustomNavigation,
 	    _ref$onPrevArrowClick = _ref.onPrevArrowClick,
 	    onPrevArrowClick = _ref$onPrevArrowClick === undefined ? function () {} : _ref$onPrevArrowClick,
 	    _ref$onNextArrowClick = _ref.onNextArrowClick,
@@ -427,10 +430,12 @@ var Staw = function Staw(_ref) {
 		React.createElement(_Controls2.default, {
 			hasArrows: hasArrows,
 			hasDots: hasDots,
+			customNavigation: customNavigation,
 			currentSlide: currentSlide,
 			onNextArrowClick: onNextArrowClick,
 			onPrevArrowClick: onPrevArrowClick,
 			setCurrentSlide: setCurrentSlide,
+			renderCustomNavigation: renderCustomNavigation,
 			children: children })
 	);
 };
@@ -505,7 +510,8 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	componentDidMount: function componentDidMount() {
 		var _props = this.props,
 		    onMountAndResize = _props.onMountAndResize,
-		    startAt = _props.startAt,
+		    _props$startAt = _props.startAt,
+		    startAt = _props$startAt === undefined ? 0 : _props$startAt,
 		    setCurrentSlide = _props.setCurrentSlide;
 
 		startAt && setCurrentSlide(startAt);
@@ -521,9 +527,11 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	var currentSlide = _ref4.currentSlide,
 	    itemWidth = _ref4.itemWidth,
 	    visibleGutter = _ref4.visibleGutter,
-	    children = _ref4.children;
+	    children = _ref4.children,
+	    customNavigation = _ref4.customNavigation;
 	return {
-		position: getPosition(currentSlide, itemWidth, visibleGutter, children)
+		position: getPosition(currentSlide, itemWidth, visibleGutter, children),
+		renderCustomNavigation: customNavigation && customNavigation.length === children.length
 	};
 }));
 
@@ -2281,11 +2289,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (_ref) {
   var hasArrows = _ref.hasArrows,
       hasDots = _ref.hasDots,
+      customNavigation = _ref.customNavigation,
       currentSlide = _ref.currentSlide,
       children = _ref.children,
       onNextArrowClick = _ref.onNextArrowClick,
       onPrevArrowClick = _ref.onPrevArrowClick,
-      setCurrentSlide = _ref.setCurrentSlide;
+      setCurrentSlide = _ref.setCurrentSlide,
+      renderCustomNavigation = _ref.renderCustomNavigation;
   return React.createElement(
     "div",
     { className: "staw__controls" },
@@ -2317,6 +2327,23 @@ exports.default = function (_ref) {
           },
           className: "staw__dot" + (currentSlide === key ? ' staw__dot--active' : '')
         });
+      })
+    ),
+    !renderCustomNavigation ? !!console.error("The number of items into Staw isn't the same number of custom dots") : React.createElement(
+      "div",
+      { className: "staw__custom-dots" },
+      children.map(function (value, key) {
+        return React.createElement(
+          "div",
+          {
+            key: key,
+            onClick: function onClick() {
+              return setCurrentSlide(key);
+            },
+            className: "staw__custom-dot" + (currentSlide === key ? ' staw__custom-dot--active' : '')
+          },
+          customNavigation[key]
+        );
       })
     )
   );

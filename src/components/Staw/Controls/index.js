@@ -1,11 +1,13 @@
 export default ({
   hasArrows,
   hasDots,
+  customNavigation,
   currentSlide,
   children,
   onNextArrowClick,
   onPrevArrowClick,
-  setCurrentSlide
+  setCurrentSlide,
+  renderCustomNavigation
 }) =>
   <div className="staw__controls">
     {
@@ -39,5 +41,22 @@ export default ({
           )
         }
       </div>
+    }
+    {
+      !renderCustomNavigation  
+      ? !!console.error("The number of items into Staw isn't the same number of custom dots")
+      :  <div className="staw__custom-dots">
+          {
+            children.map((value, key) =>
+              <div
+                key={key}
+                onClick={() => setCurrentSlide(key)}
+                className={`staw__custom-dot${currentSlide === key ? ' staw__custom-dot--active' : ''}`}
+              >
+                { customNavigation[key] }
+              </div>
+            )
+          }
+        </div>
     }
 </div>

@@ -36,7 +36,7 @@ const stawContainer = compose(
 	}),
 	lifecycle({
 		componentDidMount() {
-			const { onMountAndResize, startAt, setCurrentSlide } = this.props
+			const { onMountAndResize, startAt = 0, setCurrentSlide } = this.props
 			startAt && setCurrentSlide(startAt)
 			onMountAndResize()
 			window.addEventListener('resize', onMountAndResize)
@@ -46,8 +46,9 @@ const stawContainer = compose(
 			window.removeEventListener('resize', onMountAndResize)
 		}
 	}),
-	withProps(({ currentSlide, itemWidth, visibleGutter, children }) => ({
+	withProps(({ currentSlide, itemWidth, visibleGutter, children, customNavigation }) => ({
 		position: getPosition(currentSlide, itemWidth, visibleGutter, children),
+		renderCustomNavigation: customNavigation && customNavigation.length === children.length 
 	}))
 )
 
