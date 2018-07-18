@@ -37,7 +37,7 @@ Each child will be a slide
 Name | Description | Default Value
 --------- | -------- | ----------------
 visibleGutter| amount of next slide that should appear in px, if the slide isn't the first one or the last one, this amount is halfed in the next and previous slide. | 0 
-startAt| number (array index based) that defines the initial slide that's considered 'active'
+startAt| number (array index based) that defines the initial slide that's considered 'active' | 0
 hasDots| boolean that define if have or not dots for navigation. | true
 customNavigation | An array of strings. Each string will behave as a Dot behaves | false
 hasArrows | boolean that define if have or not arrow for navigation. | true
