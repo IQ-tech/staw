@@ -36,7 +36,8 @@ const Staw = ({
 	visibleGutter = 0,
 	hasDots = true,
 	hasArrows = true,
-	customNavigation = 0,
+	customNavigation = false,
+	renderCustomNavigation,
 	onPrevArrowClick = () => {},
 	onNextArrowClick = () => {},
 	onSwipeLeftToRight = () => {},
@@ -72,6 +73,7 @@ const Staw = ({
 			onNextArrowClick={onNextArrowClick}
 			onPrevArrowClick={onPrevArrowClick}
 			setCurrentSlide={setCurrentSlide}
+			renderCustomNavigation={renderCustomNavigation}
 			children={children} />
 	</div>
 
