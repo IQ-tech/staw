@@ -43,7 +43,7 @@ export default ({
     }
     {
       (customNavigation && customNavigation.length !== children.length)     
-      ? console.error("The number of items into Staw isn't the same number of custom dots") && false
+      ? !!console.error("The number of items into Staw isn't the same number of custom dots")
       :  <div className="staw__custom-dots">
           {
             children.map((value, key) =>
