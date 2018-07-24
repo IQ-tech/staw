@@ -350,7 +350,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var getRollSlides = function getRollSlides(children, visibleGutter, itemWidth, currentSlide) {
 	return children.map(function (child, key) {
-
 		var className = 'staw__slide';
 		className += currentSlide == key ? ' staw__slide--active' : '';
 
@@ -422,7 +421,7 @@ var Staw = function Staw(_ref) {
 					'div',
 					{ className: 'staw__roller', style: {
 							width: containerWidth || 'inherit',
-							transform: 'translateX(-' + position + 'px)',
+							transform: 'translateX(' + position + 'px)',
 							padding: '0 ' + visibleGutter / 2 + 'px'
 						} },
 					getRollSlides(children, visibleGutter, itemWidth, currentSlide)
@@ -463,13 +462,31 @@ var _recompose = __webpack_require__(7);
 var getPosition = function getPosition(currentSlide, itemWidth) {
 	var visibleGutter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 	var children = arguments[3];
+	var alignAll = arguments[4];
 
-	var position = currentSlide !== 0 ? itemWidth * currentSlide - visibleGutter / 2 : 0;
+	var position = currentSlide !== 0 ? itemWidth * currentSlide - visibleGutter / 2 : alignAll ? -visibleGutter : 0;
 	if (currentSlide > 1) {
 		position += visibleGutter / 2 * (currentSlide - 1);
-		if (currentSlide === children.length - 1) position -= visibleGutter;
+		if (currentSlide === children.length - 1) {
+			if (alignAll) {
+				position -= visibleGutter - visibleGutter;
+			} else {
+				position -= visibleGutter;
+			}
+		}
 	}
-	return position;
+
+	// const getPosition = (currentSlide, itemWidth, visibleGutter = 0, children) => {
+	// 	let position = currentSlide !== 0 ? (itemWidth * currentSlide) - (visibleGutter / 2) : -visibleGutter
+	//
+	// 	if (currentSlide > 1) {
+	// 		position += (visibleGutter / 2) * (currentSlide - 1)
+	// 		if (currentSlide === children.length - 1)
+	// 			position -= visibleGutter - visibleGutter
+	// 	}
+	// 	return -position
+	// }
+	return -position;
 };
 
 var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSlide', 'setCurrentSlide', 0), (0, _recompose.withState)('containerWidth', 'setContainerWidth', 0), (0, _recompose.withState)('itemWidth', 'setItemWidth', 0), (0, _recompose.withState)('stawId', 'setStawId', function () {
@@ -506,6 +523,7 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 		return function () {
 			var newOffsetWidth = document.getElementById(stawId).offsetWidth;
 			var newContainerWidth = newOffsetWidth * children.length;
+			console.log(newContainerWidth, visibleGutter);
 			setContainerWidth(newContainerWidth - visibleGutter);
 			setItemWidth(newOffsetWidth - visibleGutter * 3);
 		};
@@ -532,13 +550,14 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	    itemWidth = _ref4.itemWidth,
 	    visibleGutter = _ref4.visibleGutter,
 	    children = _ref4.children,
-	    customNavigation = _ref4.customNavigation;
+	    customNavigation = _ref4.customNavigation,
+	    alignAll = _ref4.alignAll;
 
 	var hasCustomNavigation = !!(customNavigation && Array.isArray(customNavigation) && customNavigation.length);
 	var validCustomNavigation = hasCustomNavigation && customNavigation.length === children.length;
 	var renderCustomNavigation = hasCustomNavigation && validCustomNavigation;
 	return {
-		position: getPosition(currentSlide, itemWidth, visibleGutter, children),
+		position: getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll),
 		hasCustomNavigation: hasCustomNavigation,
 		validCustomNavigation: validCustomNavigation,
 		renderCustomNavigation: renderCustomNavigation

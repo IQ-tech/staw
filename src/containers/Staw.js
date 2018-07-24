@@ -1,13 +1,19 @@
 import { compose, lifecycle, withHandlers, withState, withProps } from 'recompose'
 
-const getPosition = (currentSlide, itemWidth, visibleGutter = 0, children) => {
-	let position = currentSlide !== 0 ? (itemWidth * currentSlide) - (visibleGutter / 2) : 0
+const getPosition = (currentSlide, itemWidth, visibleGutter = 0, children, alignAll) => {
+	let position = currentSlide !== 0 ? (itemWidth * currentSlide) - (visibleGutter / 2) : alignAll ? -visibleGutter : 0
 	if (currentSlide > 1) {
 		position += (visibleGutter / 2) * (currentSlide - 1)
-		if (currentSlide === children.length - 1)
-			position -= visibleGutter
+		if (currentSlide === children.length - 1) {
+			if (alignAll) {
+				position -= visibleGutter - visibleGutter
+			} else {
+				position -= visibleGutter
+			}
+		}
 	}
-	return position
+
+	return -position
 }
 
 const stawContainer = compose(
@@ -30,6 +36,7 @@ const stawContainer = compose(
 		onMountAndResize: ({ stawId, children, setContainerWidth, setItemWidth, visibleGutter = 0 }) => () => {
 			const newOffsetWidth = document.getElementById(stawId).offsetWidth
 			const newContainerWidth = newOffsetWidth * children.length
+			console.log(newContainerWidth, visibleGutter)
 			setContainerWidth(newContainerWidth - visibleGutter)
 			setItemWidth(newOffsetWidth - (visibleGutter * 3))
 		}
@@ -46,12 +53,12 @@ const stawContainer = compose(
 			window.removeEventListener('resize', onMountAndResize)
 		}
 	}),
-	withProps(({ currentSlide, itemWidth, visibleGutter, children, customNavigation }) => {
+	withProps(({ currentSlide, itemWidth, visibleGutter, children, customNavigation, alignAll }) => {
 		const hasCustomNavigation = !!(customNavigation && Array.isArray(customNavigation) && customNavigation.length)
 		const validCustomNavigation =  hasCustomNavigation && customNavigation.length === children.length
 		const renderCustomNavigation = hasCustomNavigation && validCustomNavigation
 		return {
-			position: getPosition(currentSlide, itemWidth, visibleGutter, children),
+			position: getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll),
 			hasCustomNavigation,
 			validCustomNavigation,
 			renderCustomNavigation
