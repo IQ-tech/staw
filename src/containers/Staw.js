@@ -36,7 +36,6 @@ const stawContainer = compose(
 		onMountAndResize: ({ stawId, children, setContainerWidth, setItemWidth, visibleGutter = 0 }) => () => {
 			const newOffsetWidth = document.getElementById(stawId).offsetWidth
 			const newContainerWidth = newOffsetWidth * children.length
-			console.log(newContainerWidth, visibleGutter)
 			setContainerWidth(newContainerWidth - visibleGutter)
 			setItemWidth(newOffsetWidth - (visibleGutter * 3))
 		}

@@ -523,7 +523,6 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 		return function () {
 			var newOffsetWidth = document.getElementById(stawId).offsetWidth;
 			var newContainerWidth = newOffsetWidth * children.length;
-			console.log(newContainerWidth, visibleGutter);
 			setContainerWidth(newContainerWidth - visibleGutter);
 			setItemWidth(newOffsetWidth - visibleGutter * 3);
 		};
@@ -1658,7 +1657,7 @@ var createEventHandler = createEventHandlerWithConfig(config);
  * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
- * 
+ *
  */
 
 /*eslint-disable no-self-compare */
