@@ -487,7 +487,7 @@ var getPosition = function getPosition(currentSlide, itemWidth) {
 			if (alignAll) {
 				position -= visibleGutter - visibleGutter;
 			} else {
-				position -= visibleGutter;
+				// position -= visibleGutter
 			}
 		}
 	}

@@ -21,7 +21,7 @@ const getPosition = (currentSlide, itemWidth, visibleGutter = 0, children, align
 			if (alignAll) {
 				position -= visibleGutter - visibleGutter
 			} else {
-				position -= visibleGutter
+				// position -= visibleGutter
 			}
 		}
 	}
