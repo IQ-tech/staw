@@ -42,6 +42,7 @@ hasDots| boolean that define if have or not dots for navigation. | true
 hasArrows | boolean that define if have or not arrow for navigation. | true
 customNavigation | An array of strings. Each string will behave as a Dot behaves | false
 alignAll| boolean that aligns the first and the last child in the center | false
+slidesPerView | value that will define the quantity slides to show, your can use number or 'auto' | 1
 onPrevArrowClick(currentSlide) | a callback that executes on prev arrow click, before currentSlide update | (currentSlide) => {}
 onNextArrowClick(currentSlide) | a callback that executes on next arrow click, before currentSlide update | (currentSlide) => {}
 onSwipeLeftToRight(currentSlide) | same as prevArrowClick but for swipe | (currentSlide) => {}
