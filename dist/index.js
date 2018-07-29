@@ -420,7 +420,6 @@ var Staw = function Staw(_ref) {
 				React.createElement(
 					'div',
 					{ className: 'staw__roller', style: {
-							width: containerWidth || 'inherit',
 							transform: 'translateX(' + position + 'px)',
 							padding: '0 ' + visibleGutter / 2 + 'px'
 						} },
@@ -459,12 +458,29 @@ Object.defineProperty(exports, "__esModule", {
 
 var _recompose = __webpack_require__(7);
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var getPosition = function getPosition(currentSlide, itemWidth) {
 	var visibleGutter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 	var children = arguments[3];
 	var alignAll = arguments[4];
+	var slidesPerView = arguments[5];
+	var stawId = arguments[6];
 
-	var position = currentSlide !== 0 ? itemWidth * currentSlide - visibleGutter / 2 : alignAll ? -visibleGutter : 0;
+
+	var slidesWidth = 0;
+
+	if (slidesPerView === 'auto') {
+		var slides = [].concat(_toConsumableArray(document.querySelectorAll('#' + stawId + ' .staw__slide')));
+		for (var i = 0; i < currentSlide; i++) {
+			slidesWidth += slides[i].offsetWidth;
+		}
+	} else {
+		slidesWidth = itemWidth * currentSlide;
+	}
+
+	var position = currentSlide !== 0 ? slidesWidth - visibleGutter / 2 : alignAll ? -visibleGutter : 0;
+
 	if (currentSlide > 1) {
 		position += visibleGutter / 2 * (currentSlide - 1);
 		if (currentSlide === children.length - 1) {
@@ -476,20 +492,10 @@ var getPosition = function getPosition(currentSlide, itemWidth) {
 		}
 	}
 
-	// const getPosition = (currentSlide, itemWidth, visibleGutter = 0, children) => {
-	// 	let position = currentSlide !== 0 ? (itemWidth * currentSlide) - (visibleGutter / 2) : -visibleGutter
-	//
-	// 	if (currentSlide > 1) {
-	// 		position += (visibleGutter / 2) * (currentSlide - 1)
-	// 		if (currentSlide === children.length - 1)
-	// 			position -= visibleGutter - visibleGutter
-	// 	}
-	// 	return -position
-	// }
 	return -position;
 };
 
-var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSlide', 'setCurrentSlide', 0), (0, _recompose.withState)('containerWidth', 'setContainerWidth', 0), (0, _recompose.withState)('itemWidth', 'setItemWidth', 0), (0, _recompose.withState)('stawId', 'setStawId', function () {
+var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSlide', 'setCurrentSlide', 0), (0, _recompose.withState)('containerWidth', 'setContainerWidth', 0), (0, _recompose.withState)('itemWidth', 'setItemWidth', 0), (0, _recompose.withState)('slideItems', 'setSlideItems', []), (0, _recompose.withState)('stawId', 'setStawId', function () {
 	return 'staw-' + Date.now();
 }), (0, _recompose.withHandlers)({
 	next: function next(_ref) {
@@ -519,12 +525,14 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 		    setContainerWidth = _ref3.setContainerWidth,
 		    setItemWidth = _ref3.setItemWidth,
 		    _ref3$visibleGutter = _ref3.visibleGutter,
-		    visibleGutter = _ref3$visibleGutter === undefined ? 0 : _ref3$visibleGutter;
+		    visibleGutter = _ref3$visibleGutter === undefined ? 0 : _ref3$visibleGutter,
+		    _ref3$slidesPerView = _ref3.slidesPerView,
+		    slidesPerView = _ref3$slidesPerView === undefined ? 1 : _ref3$slidesPerView;
 		return function () {
 			var newOffsetWidth = document.getElementById(stawId).offsetWidth;
 			var newContainerWidth = newOffsetWidth * children.length;
 			setContainerWidth(newContainerWidth - visibleGutter);
-			setItemWidth(newOffsetWidth - visibleGutter * 3);
+			setItemWidth(slidesPerView === 'auto' ? slidesPerView : newOffsetWidth / slidesPerView - visibleGutter * 3);
 		};
 	}
 }), (0, _recompose.lifecycle)({
@@ -550,13 +558,16 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	    visibleGutter = _ref4.visibleGutter,
 	    children = _ref4.children,
 	    customNavigation = _ref4.customNavigation,
-	    alignAll = _ref4.alignAll;
+	    alignAll = _ref4.alignAll,
+	    slidesPerView = _ref4.slidesPerView,
+	    stawId = _ref4.stawId;
 
 	var hasCustomNavigation = !!(customNavigation && Array.isArray(customNavigation) && customNavigation.length);
 	var validCustomNavigation = hasCustomNavigation && customNavigation.length === children.length;
 	var renderCustomNavigation = hasCustomNavigation && validCustomNavigation;
+
 	return {
-		position: getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll),
+		position: getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll, slidesPerView, stawId),
 		hasCustomNavigation: hasCustomNavigation,
 		validCustomNavigation: validCustomNavigation,
 		renderCustomNavigation: renderCustomNavigation
@@ -1657,7 +1668,7 @@ var createEventHandler = createEventHandlerWithConfig(config);
  * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
- *
+ * 
  */
 
 /*eslint-disable no-self-compare */
