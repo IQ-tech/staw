@@ -60,7 +60,6 @@ const Staw = ({
 					className="staw__container"
 					>
 					<div className="staw__roller" style={{
-							width: containerWidth || 'inherit',
 							transform: `translateX(${position}px)`,
 							padding: `0 ${visibleGutter / 2}px`
 						}}>
