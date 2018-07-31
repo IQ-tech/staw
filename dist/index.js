@@ -459,6 +459,10 @@ var _recompose = __webpack_require__(7);
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+var isClient = function isClient() {
+	return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+};
+
 var getPosition = function getPosition(currentSlide, itemWidth) {
 	var visibleGutter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 	var children = arguments[3];
@@ -534,7 +538,7 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 		    _ref3$slidesPerView = _ref3.slidesPerView,
 		    slidesPerView = _ref3$slidesPerView === undefined ? 1 : _ref3$slidesPerView;
 		return function () {
-			var newOffsetWidth = document.getElementById(stawId).offsetWidth;
+			var newOffsetWidth = isClient() ? document.getElementById(stawId).offsetWidth : 0;
 			var newContainerWidth = newOffsetWidth * children.length;
 			setContainerWidth(newContainerWidth - visibleGutter);
 			setItemWidth(slidesPerView === 'auto' ? slidesPerView : newOffsetWidth / slidesPerView - visibleGutter * 3);
@@ -549,13 +553,15 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 		    setCurrentSlide = _props.setCurrentSlide;
 
 		startAt && setCurrentSlide(startAt);
-		onMountAndResize();
-		window.addEventListener('resize', onMountAndResize);
+		if (isClient()) {
+			onMountAndResize();
+			window.addEventListener('resize', onMountAndResize);
+		}
 	},
 	componentWillUnmount: function componentWillUnmount() {
 		var onMountAndResize = this.props.onMountAndResize;
 
-		window.removeEventListener('resize', onMountAndResize);
+		if (isClient()) window.removeEventListener('resize', onMountAndResize);
 	}
 }), (0, _recompose.withProps)(function (_ref4) {
 	var currentSlide = _ref4.currentSlide,
@@ -573,7 +579,7 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	var renderCustomNavigation = hasCustomNavigation && validCustomNavigation;
 
 	return {
-		position: getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll, slidesPerView, stawId, containerWidth),
+		position: isClient() && getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll, slidesPerView, stawId, containerWidth),
 		hasCustomNavigation: hasCustomNavigation,
 		validCustomNavigation: validCustomNavigation,
 		renderCustomNavigation: renderCustomNavigation

@@ -1,5 +1,7 @@
 import { compose, lifecycle, withHandlers, withState, withProps } from 'recompose'
 
+const isClient = () => !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
 const getPosition = (currentSlide, itemWidth, visibleGutter = 0, children, alignAll, slidesPerView, stawId, containerWidth) => {
 
   let slidesWidth = 0,
@@ -53,7 +55,7 @@ const stawContainer = compose(
 			}
 		},
 		onMountAndResize: ({ stawId, children, setContainerWidth, setItemWidth, visibleGutter = 0, slidesPerView = 1 }) => () => {
-			const newOffsetWidth = document.getElementById(stawId).offsetWidth
+			const newOffsetWidth = isClient() ? document.getElementById(stawId).offsetWidth : 0
 			const newContainerWidth = newOffsetWidth * children.length
 			setContainerWidth(newContainerWidth - visibleGutter)
       setItemWidth(slidesPerView === 'auto' ? slidesPerView : (newOffsetWidth / slidesPerView) - (visibleGutter * 3))
@@ -63,12 +65,15 @@ const stawContainer = compose(
 		componentDidMount() {
 			const { onMountAndResize, startAt = 0, setCurrentSlide } = this.props
 			startAt && setCurrentSlide(startAt)
-			onMountAndResize()
-			window.addEventListener('resize', onMountAndResize)
+      if (isClient()) {
+        onMountAndResize()
+        window.addEventListener('resize', onMountAndResize)
+      }
 		},
 		componentWillUnmount() {
 			const { onMountAndResize } = this.props
-			window.removeEventListener('resize', onMountAndResize)
+      if (isClient())
+			   window.removeEventListener('resize', onMountAndResize)
 		}
 	}),
 	withProps(({
@@ -87,7 +92,7 @@ const stawContainer = compose(
 		const renderCustomNavigation = hasCustomNavigation && validCustomNavigation
 
 		return {
-			position: getPosition(
+			position: isClient() && getPosition(
         currentSlide,
         itemWidth,
         visibleGutter,
