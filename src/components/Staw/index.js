@@ -60,8 +60,7 @@ const Staw = ({
 					className="staw__container"
 					>
 					<div className="staw__roller" style={{
-							transform: `translateX(${position}px)`,
-							padding: `0 ${visibleGutter / 2}px`
+							transform: `translateX(${position}px)`
 						}}>
 						{getRollSlides(children, visibleGutter, itemWidth, currentSlide)}
 					</div>

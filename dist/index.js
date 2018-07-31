@@ -420,8 +420,7 @@ var Staw = function Staw(_ref) {
 				React.createElement(
 					'div',
 					{ className: 'staw__roller', style: {
-							transform: 'translateX(' + position + 'px)',
-							padding: '0 ' + visibleGutter / 2 + 'px'
+							transform: 'translateX(' + position + 'px)'
 						} },
 					getRollSlides(children, visibleGutter, itemWidth, currentSlide)
 				)
@@ -466,12 +465,16 @@ var getPosition = function getPosition(currentSlide, itemWidth) {
 	var alignAll = arguments[4];
 	var slidesPerView = arguments[5];
 	var stawId = arguments[6];
+	var containerWidth = arguments[7];
 
 
-	var slidesWidth = 0;
+	var slidesWidth = 0,
+	    position = void 0;
+
+	var slides = [].concat(_toConsumableArray(document.querySelectorAll('#' + stawId + ' .staw__slide')));
+	var currentSlideWidth = slides.length && slides[currentSlide].offsetWidth;
 
 	if (slidesPerView === 'auto') {
-		var slides = [].concat(_toConsumableArray(document.querySelectorAll('#' + stawId + ' .staw__slide')));
 		for (var i = 0; i < currentSlide; i++) {
 			slidesWidth += slides[i].offsetWidth;
 		}
@@ -479,17 +482,19 @@ var getPosition = function getPosition(currentSlide, itemWidth) {
 		slidesWidth = itemWidth * currentSlide;
 	}
 
-	var position = currentSlide !== 0 ? slidesWidth - visibleGutter / 2 : alignAll ? -visibleGutter : 0;
+	position = currentSlide !== 0 ? slidesWidth - visibleGutter / 2 : alignAll ? -visibleGutter : 0;
 
 	if (currentSlide > 1) {
 		position += visibleGutter / 2 * (currentSlide - 1);
 		if (currentSlide === children.length - 1) {
 			if (alignAll) {
 				position -= visibleGutter - visibleGutter;
-			} else {
-				// position -= visibleGutter
 			}
 		}
+	}
+
+	if (alignAll && slides.length) {
+		position = -(-position + document.getElementById(stawId).offsetWidth / 2 - currentSlideWidth / 2 - visibleGutter);
 	}
 
 	return -position;
@@ -560,14 +565,15 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 	    customNavigation = _ref4.customNavigation,
 	    alignAll = _ref4.alignAll,
 	    slidesPerView = _ref4.slidesPerView,
-	    stawId = _ref4.stawId;
+	    stawId = _ref4.stawId,
+	    containerWidth = _ref4.containerWidth;
 
 	var hasCustomNavigation = !!(customNavigation && Array.isArray(customNavigation) && customNavigation.length);
 	var validCustomNavigation = hasCustomNavigation && customNavigation.length === children.length;
 	var renderCustomNavigation = hasCustomNavigation && validCustomNavigation;
 
 	return {
-		position: getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll, slidesPerView, stawId),
+		position: getPosition(currentSlide, itemWidth, visibleGutter, children, alignAll, slidesPerView, stawId, containerWidth),
 		hasCustomNavigation: hasCustomNavigation,
 		validCustomNavigation: validCustomNavigation,
 		renderCustomNavigation: renderCustomNavigation
