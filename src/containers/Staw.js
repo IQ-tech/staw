@@ -74,7 +74,11 @@ const stawContainer = compose(
 			const { onMountAndResize } = this.props
       if (isClient())
 			   window.removeEventListener('resize', onMountAndResize)
-		}
+		},
+    componentDidUpdate(prevProps) {
+      const { slidesPerView, onMountAndResize } = this.props
+      if (prevProps.slidesPerView !== slidesPerView) onMountAndResize() 
+    }
 	}),
 	withProps(({
     currentSlide,

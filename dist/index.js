@@ -562,6 +562,13 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 		var onMountAndResize = this.props.onMountAndResize;
 
 		if (isClient()) window.removeEventListener('resize', onMountAndResize);
+	},
+	componentDidUpdate: function componentDidUpdate(prevProps) {
+		var _props2 = this.props,
+		    slidesPerView = _props2.slidesPerView,
+		    onMountAndResize = _props2.onMountAndResize;
+
+		if (prevProps.slidesPerView !== slidesPerView) onMountAndResize();
 	}
 }), (0, _recompose.withProps)(function (_ref4) {
 	var currentSlide = _ref4.currentSlide,
