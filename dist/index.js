@@ -548,12 +548,11 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 		};
 	},
 	onItemClick: function onItemClick(_ref4) {
-		var _ref4$navigateOnItemC = _ref4.navigateOnItemClick,
-		    navigateOnItemClick = _ref4$navigateOnItemC === undefined ? false : _ref4$navigateOnItemC,
+		var navigateOnItemClick = _ref4.navigateOnItemClick,
 		    setCurrentSlide = _ref4.setCurrentSlide,
 		    currentSlide = _ref4.currentSlide;
 		return function (e) {
-			if (navigateOnItemClick) {
+			if (!!navigateOnItemClick) {
 				var dataKey = e.currentTarget.dataset.key;
 				currentSlide !== dataKey && setCurrentSlide(~~dataKey);
 			}

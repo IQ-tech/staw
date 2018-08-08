@@ -60,8 +60,8 @@ const stawContainer = compose(
 			setContainerWidth(newContainerWidth - visibleGutter)
       setItemWidth(slidesPerView === 'auto' ? slidesPerView : (newOffsetWidth / slidesPerView) - (visibleGutter * 3))
 		},
-    onItemClick: ({ navigateOnItemClick = false, setCurrentSlide, currentSlide }) => e => {
-      if (navigateOnItemClick) {
+    onItemClick: ({ navigateOnItemClick, setCurrentSlide, currentSlide }) => e => {
+      if (!!navigateOnItemClick) {
         const dataKey = e.currentTarget.dataset.key
         currentSlide !== dataKey && setCurrentSlide(~~dataKey)
       }
