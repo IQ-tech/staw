@@ -348,7 +348,7 @@ __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var getRollSlides = function getRollSlides(children, visibleGutter, itemWidth, currentSlide) {
+var getRollSlides = function getRollSlides(children, visibleGutter, itemWidth, currentSlide, onItemClick) {
 	return children.map(function (child, key) {
 		var className = 'staw__slide';
 		className += currentSlide == key ? ' staw__slide--active' : '';
@@ -358,6 +358,8 @@ var getRollSlides = function getRollSlides(children, visibleGutter, itemWidth, c
 			{
 				className: className,
 				key: key,
+				'data-key': key,
+				onClick: onItemClick,
 				style: {
 					width: itemWidth || 'inherit',
 					marginLeft: key !== 0 ? visibleGutter / 2 + 'px' : 0
@@ -389,6 +391,7 @@ var Staw = function Staw(_ref) {
 	    hasCustomNavigation = _ref.hasCustomNavigation,
 	    validCustomNavigation = _ref.validCustomNavigation,
 	    renderCustomNavigation = _ref.renderCustomNavigation,
+	    onItemClick = _ref.onItemClick,
 	    _ref$onPrevArrowClick = _ref.onPrevArrowClick,
 	    onPrevArrowClick = _ref$onPrevArrowClick === undefined ? function () {} : _ref$onPrevArrowClick,
 	    _ref$onNextArrowClick = _ref.onNextArrowClick,
@@ -422,7 +425,7 @@ var Staw = function Staw(_ref) {
 					{ className: 'staw__roller', style: {
 							transform: 'translateX(' + position + 'px)'
 						} },
-					getRollSlides(children, visibleGutter, itemWidth, currentSlide)
+					getRollSlides(children, visibleGutter, itemWidth, currentSlide, onItemClick)
 				)
 			)
 		),
@@ -543,6 +546,18 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 			setContainerWidth(newContainerWidth - visibleGutter);
 			setItemWidth(slidesPerView === 'auto' ? slidesPerView : newOffsetWidth / slidesPerView - visibleGutter * 3);
 		};
+	},
+	onItemClick: function onItemClick(_ref4) {
+		var _ref4$navigateOnItemC = _ref4.navigateOnItemClick,
+		    navigateOnItemClick = _ref4$navigateOnItemC === undefined ? false : _ref4$navigateOnItemC,
+		    setCurrentSlide = _ref4.setCurrentSlide,
+		    currentSlide = _ref4.currentSlide;
+		return function (e) {
+			if (navigateOnItemClick) {
+				var dataKey = e.currentTarget.dataset.key;
+				currentSlide !== dataKey && setCurrentSlide(~~dataKey);
+			}
+		};
 	}
 }), (0, _recompose.lifecycle)({
 	componentDidMount: function componentDidMount() {
@@ -570,16 +585,16 @@ var stawContainer = (0, _recompose.compose)((0, _recompose.withState)('currentSl
 
 		if (prevProps.slidesPerView !== slidesPerView) onMountAndResize();
 	}
-}), (0, _recompose.withProps)(function (_ref4) {
-	var currentSlide = _ref4.currentSlide,
-	    itemWidth = _ref4.itemWidth,
-	    visibleGutter = _ref4.visibleGutter,
-	    children = _ref4.children,
-	    customNavigation = _ref4.customNavigation,
-	    alignAll = _ref4.alignAll,
-	    slidesPerView = _ref4.slidesPerView,
-	    stawId = _ref4.stawId,
-	    containerWidth = _ref4.containerWidth;
+}), (0, _recompose.withProps)(function (_ref5) {
+	var currentSlide = _ref5.currentSlide,
+	    itemWidth = _ref5.itemWidth,
+	    visibleGutter = _ref5.visibleGutter,
+	    children = _ref5.children,
+	    customNavigation = _ref5.customNavigation,
+	    alignAll = _ref5.alignAll,
+	    slidesPerView = _ref5.slidesPerView,
+	    stawId = _ref5.stawId,
+	    containerWidth = _ref5.containerWidth;
 
 	var hasCustomNavigation = !!(customNavigation && Array.isArray(customNavigation) && customNavigation.length);
 	var validCustomNavigation = hasCustomNavigation && customNavigation.length === children.length;

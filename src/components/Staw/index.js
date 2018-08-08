@@ -3,24 +3,31 @@ import Swipper from '../Swipper'
 import StawControls from './Controls'
 import './Staw.styl'
 
-const getRollSlides = (children, visibleGutter, itemWidth, currentSlide) =>
-	children.map((child, key) => {
-    let className = 'staw__slide'
-    className += (currentSlide == key) ? ' staw__slide--active' : ''
+const getRollSlides = (
+	children,
+	visibleGutter,
+	itemWidth,
+	currentSlide,
+	onItemClick
+) => children.map((child, key) => {
+  let className = 'staw__slide'
+  className += (currentSlide == key) ? ' staw__slide--active' : ''
 
-    return (
-			<div
-				className={className}
-				key={key}
-				style={{
-					width: itemWidth || 'inherit',
-					marginLeft: key !== 0 ? `${visibleGutter / 2}px` : 0
-				}}
-				>
-				{child}
-			</div>
-		)}
-	)
+  return (
+		<div
+			className={className}
+			key={key}
+			data-key={key}
+			onClick={onItemClick}
+			style={{
+				width: itemWidth || 'inherit',
+				marginLeft: key !== 0 ? `${visibleGutter / 2}px` : 0
+			}}
+			>
+			{child}
+		</div>
+	)}
+)
 
 const Staw = ({
 	children,
@@ -39,12 +46,12 @@ const Staw = ({
 	hasCustomNavigation,
 	validCustomNavigation,
 	renderCustomNavigation,
+	onItemClick,
 	onPrevArrowClick = () => {},
 	onNextArrowClick = () => {},
 	onSwipeLeftToRight = () => {},
 	onSwipeRightToLeft = () => {}
 }) => {
-
 	return (
 		<div className="staw">
 			<div id={stawId} className="staw__holder">
@@ -62,7 +69,13 @@ const Staw = ({
 					<div className="staw__roller" style={{
 							transform: `translateX(${position}px)`
 						}}>
-						{getRollSlides(children, visibleGutter, itemWidth, currentSlide)}
+						{getRollSlides(
+							children,
+							visibleGutter,
+							itemWidth,
+							currentSlide,
+							onItemClick
+						)}
 					</div>
 				</Swipper>
 			</div>

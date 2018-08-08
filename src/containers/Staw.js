@@ -59,7 +59,13 @@ const stawContainer = compose(
 			const newContainerWidth = newOffsetWidth * children.length
 			setContainerWidth(newContainerWidth - visibleGutter)
       setItemWidth(slidesPerView === 'auto' ? slidesPerView : (newOffsetWidth / slidesPerView) - (visibleGutter * 3))
-		}
+		},
+    onItemClick: ({ navigateOnItemClick = false, setCurrentSlide, currentSlide }) => e => {
+      if (navigateOnItemClick) {
+        const dataKey = e.currentTarget.dataset.key
+        currentSlide !== dataKey && setCurrentSlide(~~dataKey)
+      }
+    }
 	}),
 	lifecycle({
 		componentDidMount() {
@@ -77,7 +83,7 @@ const stawContainer = compose(
 		},
     componentDidUpdate(prevProps) {
       const { slidesPerView, onMountAndResize } = this.props
-      if (prevProps.slidesPerView !== slidesPerView) onMountAndResize() 
+      if (prevProps.slidesPerView !== slidesPerView) onMountAndResize()
     }
 	}),
 	withProps(({
