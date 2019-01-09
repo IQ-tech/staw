@@ -392,6 +392,8 @@ var Staw = function Staw(_ref) {
 	    validCustomNavigation = _ref.validCustomNavigation,
 	    renderCustomNavigation = _ref.renderCustomNavigation,
 	    onItemClick = _ref.onItemClick,
+	    _ref$onDotClick = _ref.onDotClick,
+	    onDotClick = _ref$onDotClick === undefined ? function () {} : _ref$onDotClick,
 	    _ref$onPrevArrowClick = _ref.onPrevArrowClick,
 	    onPrevArrowClick = _ref$onPrevArrowClick === undefined ? function () {} : _ref$onPrevArrowClick,
 	    _ref$onNextArrowClick = _ref.onNextArrowClick,
@@ -434,6 +436,7 @@ var Staw = function Staw(_ref) {
 			hasDots: hasDots,
 			customNavigation: customNavigation,
 			currentSlide: currentSlide,
+			onDotClick: onDotClick,
 			onNextArrowClick: onNextArrowClick,
 			onPrevArrowClick: onPrevArrowClick,
 			setCurrentSlide: setCurrentSlide,
@@ -2054,6 +2057,8 @@ var enhance = (0, _compose2.default)((0, _withState2.default)('startReference', 
 				}
 			}
 			changeStartReference(0);
+
+			console.log('lllllllllllll');
 		};
 	}
 }));
@@ -2364,6 +2369,7 @@ exports.default = function (_ref) {
       customNavigation = _ref.customNavigation,
       currentSlide = _ref.currentSlide,
       children = _ref.children,
+      onDotClick = _ref.onDotClick,
       onNextArrowClick = _ref.onNextArrowClick,
       onPrevArrowClick = _ref.onPrevArrowClick,
       setCurrentSlide = _ref.setCurrentSlide,
@@ -2397,7 +2403,8 @@ exports.default = function (_ref) {
         return React.createElement("div", {
           key: key,
           onClick: function onClick() {
-            return setCurrentSlide(key);
+            setCurrentSlide(key);
+            onDotClick(key);
           },
           className: "staw__dot" + (currentSlide === key ? ' staw__dot--active' : '')
         });

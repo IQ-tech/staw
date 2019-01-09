@@ -4,6 +4,7 @@ export default ({
   customNavigation,
   currentSlide,
   children,
+  onDotClick,
   onNextArrowClick,
   onPrevArrowClick,
   setCurrentSlide,
@@ -37,7 +38,10 @@ export default ({
           children.map((value, key) =>
             <div
               key={key}
-              onClick={() => setCurrentSlide(key)}
+              onClick={() => {
+                setCurrentSlide(key)
+                onDotClick(key)
+              }}
               className={`staw__dot${currentSlide === key ? ' staw__dot--active' : ''}`}
             />
           )

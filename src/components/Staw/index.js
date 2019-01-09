@@ -47,6 +47,7 @@ const Staw = ({
 	validCustomNavigation,
 	renderCustomNavigation,
 	onItemClick,
+	onDotClick = () => {},
 	onPrevArrowClick = () => {},
 	onNextArrowClick = () => {},
 	onSwipeLeftToRight = () => {},
@@ -84,6 +85,7 @@ const Staw = ({
 				hasDots={hasDots}
 				customNavigation={customNavigation}
 				currentSlide={currentSlide}
+				onDotClick={onDotClick}
 				onNextArrowClick={onNextArrowClick}
 				onPrevArrowClick={onPrevArrowClick}
 				setCurrentSlide={setCurrentSlide}
