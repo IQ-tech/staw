@@ -20,7 +20,11 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['react']
+						presets: ['env', 'react'],
+						plugins: [
+					    "transform-object-rest-spread",
+					    "transform-object-assign"
+					  ]
 					}
 				}
 			},
