@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import 'idempotent-babel-polyfill'
 import stawContainer from '../../containers/Staw'
 import Swipper from '../Swipper'
 import StawControls from './Controls'
