@@ -11,8 +11,10 @@ const getRollSlides = (
 	currentSlide,
 	onItemClick
 ) => children.map((child, key) => {
-  let className = 'staw__slide'
-  className += (currentSlide == key) ? ' staw__slide--active' : ''
+  let className = 'staw__slide';
+    className += currentSlide == key ? " staw__slide--active" : "";
+    className += key == currentSlide + 1 ? " staw__slide--next" : "";
+    className += key == currentSlide - 1 ? " staw__slide--prev" : "";
 
   return (
 		<div
