@@ -1,5 +1,5 @@
 import 'idempotent-babel-polyfill'
-import stawContainer from '../../containers/Staw'
+import stawContainer from '../../container'
 import Swipper from '../Swipper'
 import StawControls from './Controls'
 import './Staw.styl'
