@@ -18,8 +18,8 @@ export default ({
       <div className="staw__arrows">
         <div
           onClick={() => {
-            onPrevArrowClick(currentSlide);
-            setCurrentSlide(currentSlide - 1);
+            onPrevArrowClick(currentSlide)
+            setCurrentSlide(currentSlide - 1)
           }}
           className={`staw__arrow staw__arrow--prev${
             currentSlide ? "" : " staw__arrow--disabled"
@@ -29,8 +29,8 @@ export default ({
         </div>
         <div
           onClick={() => {
-            onNextArrowClick(currentSlide);
-            setCurrentSlide(currentSlide + 1);
+            onNextArrowClick(currentSlide)
+            setCurrentSlide(currentSlide + 1)
           }}
           className={`staw__arrow staw__arrow--next${
             currentSlide < children.length - 1 ? "" : " staw__arrow--disabled"
@@ -46,8 +46,8 @@ export default ({
           <div
             key={key}
             onClick={() => {
-              setCurrentSlide(key);
-              onDotClick(key);
+              setCurrentSlide(key)
+              onDotClick(key)
             }}
             className={`staw__dot${
               currentSlide === key ? " staw__dot--active" : ""
@@ -77,4 +77,4 @@ export default ({
       )
     )}
   </div>
-);
+)
