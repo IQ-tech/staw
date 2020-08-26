@@ -40,6 +40,7 @@ visibleGutter| amount of next slide that should appear in px, if the slide isn't
 startAt| number (array index based) that defines the initial slide that's considered 'active' | 0
 hasDots| boolean that define if have or not dots for navigation. | true
 hasArrows | boolean that define if have or not arrow for navigation. | true
+customArrow | Add a custom arrow markup | null
 customNavigation | An array of strings. Each string will behave as a Dot behaves | false
 alignAll| boolean that aligns the first and the last child in the center | false
 slidesPerView | value that will define the quantity slides to show, your can use number or 'auto' | 1

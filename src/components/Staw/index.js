@@ -54,7 +54,8 @@ const Staw = ({
 	onPrevArrowClick = () => {},
 	onNextArrowClick = () => {},
 	onSwipeLeftToRight = () => {},
-	onSwipeRightToLeft = () => {}
+	onSwipeRightToLeft = () => {},
+	customArrow
 }) => {
 	return (
 		<div className="staw">
@@ -95,6 +96,7 @@ const Staw = ({
 				renderCustomNavigation={renderCustomNavigation}
 				hasCustomNavigation={hasCustomNavigation}
 				validCustomNavigation={validCustomNavigation}
+				customArrow={customArrow}
 				children={children} />
 		</div>
 	)
